@@ -25,7 +25,7 @@ interface ConstellationProps {
 
 const Constellation = ({ name, latin, stars, lines, x, y, hemisphere, delay }: ConstellationProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const baseSize = 80;
+  const baseSize = 180;
 
   return (
     <div
@@ -59,8 +59,8 @@ const Constellation = ({ name, latin, stars, lines, x, y, hemisphere, delay }: C
               x2={star2.x * baseSize}
               y2={star2.y * baseSize}
               stroke="hsl(var(--primary))"
-              strokeWidth={isHovered ? "1.5" : "0.8"}
-              strokeOpacity={isHovered ? "0.7" : "0.3"}
+              strokeWidth={isHovered ? "2.5" : "1.2"}
+              strokeOpacity={isHovered ? "0.8" : "0.4"}
               className="transition-all duration-300"
               style={{
                 filter: isHovered ? 'drop-shadow(0 0 3px hsl(var(--primary)))' : 'none'
@@ -70,20 +70,20 @@ const Constellation = ({ name, latin, stars, lines, x, y, hemisphere, delay }: C
         })}
 
         {stars.map((star, idx) => {
-          const size = 1.5 + star.brightness * 1.5;
+          const size = 2.5 + star.brightness * 2;
           return (
             <circle
               key={idx}
               cx={star.x * baseSize}
               cy={star.y * baseSize}
-              r={isHovered ? size * 1.3 : size}
+              r={isHovered ? size * 1.4 : size}
               fill="white"
               className="animate-twinkle transition-all duration-300"
               style={{
                 animationDelay: `${delay + idx * 0.1}s`,
                 filter: isHovered 
-                  ? `drop-shadow(0 0 ${3 + star.brightness * 2}px white)` 
-                  : `drop-shadow(0 0 ${1 + star.brightness}px white)`
+                  ? `drop-shadow(0 0 ${5 + star.brightness * 3}px white)` 
+                  : `drop-shadow(0 0 ${2 + star.brightness * 1.5}px white)`
               }}
             />
           );
