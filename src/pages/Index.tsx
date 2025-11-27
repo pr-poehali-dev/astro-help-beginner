@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import Constellation from '@/components/Constellation';
+import { getConstellationShape } from '@/data/constellationShapes';
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -353,46 +355,36 @@ const Index = () => {
             <div 
               className="relative w-full h-[800px] overflow-auto bg-gradient-to-b from-background via-card to-background"
               style={{
-                backgroundImage: 'radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent), radial-gradient(1px 1px at 80% 10%, white, transparent), radial-gradient(2px 2px at 90% 60%, white, transparent), radial-gradient(1px 1px at 33% 50%, white, transparent), radial-gradient(1px 1px at 66% 20%, white, transparent), radial-gradient(2px 2px at 15% 80%, white, transparent), radial-gradient(1px 1px at 85% 85%, white, transparent), radial-gradient(1px 1px at 40% 15%, white, transparent)',
+                backgroundImage: 'radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.3), transparent), radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.4), transparent), radial-gradient(0.5px 0.5px at 50% 50%, rgba(255,255,255,0.2), transparent), radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.3), transparent), radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.4), transparent), radial-gradient(0.5px 0.5px at 33% 50%, rgba(255,255,255,0.2), transparent), radial-gradient(1px 1px at 66% 20%, rgba(255,255,255,0.3), transparent), radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.3), transparent), radial-gradient(0.5px 0.5px at 85% 85%, rgba(255,255,255,0.2), transparent), radial-gradient(1px 1px at 40% 15%, rgba(255,255,255,0.4), transparent), radial-gradient(0.5px 0.5px at 25% 60%, rgba(255,255,255,0.2), transparent), radial-gradient(1px 1px at 70% 45%, rgba(255,255,255,0.3), transparent), radial-gradient(0.5px 0.5px at 55% 85%, rgba(255,255,255,0.2), transparent), radial-gradient(1px 1px at 10% 40%, rgba(255,255,255,0.3), transparent)',
                 backgroundSize: '400px 400px'
               }}
             >
-              <div className="relative min-h-[1200px] w-full">
-                {filteredConstellations.map((constellation, idx) => (
-                  <div
-                    key={idx}
-                    className="absolute group cursor-pointer z-10"
-                    style={{ 
-                      left: `${constellation.x}%`, 
-                      top: `${(constellation.y / 100) * 1200}px`,
-                      transform: 'translate(-50%, -50%)'
-                    }}
-                  >
-                    <div className="relative">
-                      <div 
-                        className="w-2 h-2 bg-primary rounded-full animate-twinkle shadow-lg shadow-primary/50 hover:w-3 hover:h-3 transition-all" 
-                        style={{ animationDelay: `${idx * 0.05}s` }} 
-                      />
-                      <div className="absolute -top-16 left-1/2 -translate-x-1/2 bg-card/95 border border-border/50 px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap backdrop-blur z-20 shadow-xl">
-                        <p className="text-sm font-bold">{constellation.name}</p>
-                        <p className="text-xs text-muted-foreground italic">{constellation.latin}</p>
-                        <div className="flex gap-2 mt-1">
-                          <Badge variant="outline" className="text-xs">
-                            {constellation.stars} ⭐
-                          </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            {constellation.hemisphere}
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div className="relative min-h-[1600px] w-full">
+                {filteredConstellations.map((constellation, idx) => {
+                  const shape = getConstellationShape(constellation.name);
+                  return (
+                    <Constellation
+                      key={idx}
+                      name={constellation.name}
+                      latin={constellation.latin}
+                      stars={shape.stars}
+                      lines={shape.lines}
+                      x={constellation.x}
+                      y={(constellation.y / 100) * 1600}
+                      hemisphere={constellation.hemisphere}
+                      delay={idx * 0.05}
+                    />
+                  );
+                })}
 
-                <div className="absolute top-4 left-4 right-4 flex gap-2 flex-wrap pointer-events-none">
+                <div className="absolute top-4 left-4 right-4 flex gap-2 flex-wrap pointer-events-none z-30">
                   <Badge className="bg-background/80 border-primary/50 backdrop-blur">
                     <Icon name="Map" size={12} className="mr-1" />
                     Прокрутите для просмотра всей карты
+                  </Badge>
+                  <Badge className="bg-background/80 border-secondary/50 backdrop-blur">
+                    <Icon name="MousePointer" size={12} className="mr-1" />
+                    Наведите на созвездие для информации
                   </Badge>
                 </div>
               </div>
