@@ -7,6 +7,7 @@ import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [constellationSearch, setConstellationSearch] = useState('');
 
   const telescopes = [
     {
@@ -45,15 +46,103 @@ const Index = () => {
   ];
 
   const constellations = [
-    { name: 'Большая Медведица', stars: 7, x: 30, y: 20, visible: true },
-    { name: 'Орион', stars: 9, x: 50, y: 60, visible: true },
-    { name: 'Кассиопея', stars: 5, x: 70, y: 25, visible: true },
-    { name: 'Лев', stars: 6, x: 40, y: 50, visible: false },
-    { name: 'Скорпион', stars: 8, x: 65, y: 70, visible: false }
+    { name: 'Андромеда', latin: 'Andromeda', stars: 16, x: 15, y: 25, hemisphere: 'Северное' },
+    { name: 'Насос', latin: 'Antlia', stars: 4, x: 65, y: 55, hemisphere: 'Южное' },
+    { name: 'Райская Птица', latin: 'Apus', stars: 5, x: 85, y: 85, hemisphere: 'Южное' },
+    { name: 'Водолей', latin: 'Aquarius', stars: 10, x: 78, y: 48, hemisphere: 'Экваториальное' },
+    { name: 'Орел', latin: 'Aquila', stars: 10, x: 72, y: 42, hemisphere: 'Экваториальное' },
+    { name: 'Жертвенник', latin: 'Ara', stars: 8, x: 82, y: 75, hemisphere: 'Южное' },
+    { name: 'Овен', latin: 'Aries', stars: 5, x: 18, y: 32, hemisphere: 'Северное' },
+    { name: 'Возничий', latin: 'Auriga', stars: 8, x: 28, y: 22, hemisphere: 'Северное' },
+    { name: 'Волопас', latin: 'Boötes', stars: 8, x: 58, y: 28, hemisphere: 'Северное' },
+    { name: 'Резец', latin: 'Caelum', stars: 4, x: 25, y: 65, hemisphere: 'Южное' },
+    { name: 'Жираф', latin: 'Camelopardalis', stars: 4, x: 32, y: 12, hemisphere: 'Северное' },
+    { name: 'Рак', latin: 'Cancer', stars: 5, x: 42, y: 35, hemisphere: 'Северное' },
+    { name: 'Гончие Псы', latin: 'Canes Venatici', stars: 2, x: 52, y: 22, hemisphere: 'Северное' },
+    { name: 'Большой Пес', latin: 'Canis Major', stars: 8, x: 35, y: 52, hemisphere: 'Южное' },
+    { name: 'Малый Пес', latin: 'Canis Minor', stars: 2, x: 38, y: 42, hemisphere: 'Северное' },
+    { name: 'Козерог', latin: 'Capricornus', stars: 9, x: 76, y: 52, hemisphere: 'Южное' },
+    { name: 'Киль', latin: 'Carina', stars: 9, x: 48, y: 75, hemisphere: 'Южное' },
+    { name: 'Кассиопея', latin: 'Cassiopeia', stars: 5, x: 8, y: 18, hemisphere: 'Северное' },
+    { name: 'Центавр', latin: 'Centaurus', stars: 11, x: 68, y: 68, hemisphere: 'Южное' },
+    { name: 'Цефей', latin: 'Cepheus', stars: 7, x: 5, y: 15, hemisphere: 'Северное' },
+    { name: 'Кит', latin: 'Cetus', stars: 14, x: 12, y: 48, hemisphere: 'Экваториальное' },
+    { name: 'Хамелеон', latin: 'Chamaeleon', stars: 4, x: 62, y: 88, hemisphere: 'Южное' },
+    { name: 'Циркуль', latin: 'Circinus', stars: 3, x: 75, y: 78, hemisphere: 'Южное' },
+    { name: 'Голубь', latin: 'Columba', stars: 5, x: 32, y: 62, hemisphere: 'Южное' },
+    { name: 'Волосы Вероники', latin: 'Coma Berenices', stars: 3, x: 55, y: 32, hemisphere: 'Северное' },
+    { name: 'Южная Корона', latin: 'Corona Australis', stars: 8, x: 80, y: 68, hemisphere: 'Южное' },
+    { name: 'Северная Корона', latin: 'Corona Borealis', stars: 8, x: 62, y: 28, hemisphere: 'Северное' },
+    { name: 'Ворон', latin: 'Corvus', stars: 4, x: 58, y: 55, hemisphere: 'Южное' },
+    { name: 'Чаша', latin: 'Crater', stars: 4, x: 54, y: 52, hemisphere: 'Южное' },
+    { name: 'Южный Крест', latin: 'Crux', stars: 4, x: 70, y: 78, hemisphere: 'Южное' },
+    { name: 'Лебедь', latin: 'Cygnus', stars: 9, x: 68, y: 32, hemisphere: 'Северное' },
+    { name: 'Дельфин', latin: 'Delphinus', stars: 5, x: 74, y: 38, hemisphere: 'Северное' },
+    { name: 'Золотая Рыба', latin: 'Dorado', stars: 3, x: 28, y: 78, hemisphere: 'Южное' },
+    { name: 'Дракон', latin: 'Draco', stars: 9, x: 45, y: 8, hemisphere: 'Северное' },
+    { name: 'Малый Конь', latin: 'Equuleus', stars: 4, x: 75, y: 38, hemisphere: 'Северное' },
+    { name: 'Эридан', latin: 'Eridanus', stars: 24, x: 22, y: 58, hemisphere: 'Южное' },
+    { name: 'Печь', latin: 'Fornax', stars: 4, x: 18, y: 62, hemisphere: 'Южное' },
+    { name: 'Близнецы', latin: 'Gemini', stars: 8, x: 35, y: 35, hemisphere: 'Северное' },
+    { name: 'Журавль', latin: 'Grus', stars: 6, x: 88, y: 72, hemisphere: 'Южное' },
+    { name: 'Геркулес', latin: 'Hercules', stars: 14, x: 65, y: 25, hemisphere: 'Северное' },
+    { name: 'Часы', latin: 'Horologium', stars: 3, x: 22, y: 72, hemisphere: 'Южное' },
+    { name: 'Гидра', latin: 'Hydra', stars: 17, x: 50, y: 55, hemisphere: 'Экваториальное' },
+    { name: 'Южная Гидра', latin: 'Hydrus', stars: 3, x: 15, y: 82, hemisphere: 'Южное' },
+    { name: 'Индеец', latin: 'Indus', stars: 3, x: 85, y: 78, hemisphere: 'Южное' },
+    { name: 'Ящерица', latin: 'Lacerta', stars: 5, x: 78, y: 22, hemisphere: 'Северное' },
+    { name: 'Лев', latin: 'Leo', stars: 9, x: 48, y: 38, hemisphere: 'Северное' },
+    { name: 'Малый Лев', latin: 'Leo Minor', stars: 3, x: 48, y: 28, hemisphere: 'Северное' },
+    { name: 'Заяц', latin: 'Lepus', stars: 8, x: 32, y: 58, hemisphere: 'Южное' },
+    { name: 'Весы', latin: 'Libra', stars: 6, x: 65, y: 52, hemisphere: 'Экваториальное' },
+    { name: 'Волк', latin: 'Lupus', stars: 9, x: 72, y: 72, hemisphere: 'Южное' },
+    { name: 'Рысь', latin: 'Lynx', stars: 4, x: 42, y: 18, hemisphere: 'Северное' },
+    { name: 'Лира', latin: 'Lyra', stars: 5, x: 70, y: 28, hemisphere: 'Северное' },
+    { name: 'Столовая Гора', latin: 'Mensa', stars: 3, x: 35, y: 88, hemisphere: 'Южное' },
+    { name: 'Микроскоп', latin: 'Microscopium', stars: 5, x: 82, y: 62, hemisphere: 'Южное' },
+    { name: 'Единорог', latin: 'Monoceros', stars: 4, x: 38, y: 48, hemisphere: 'Экваториальное' },
+    { name: 'Муха', latin: 'Musca', stars: 4, x: 68, y: 82, hemisphere: 'Южное' },
+    { name: 'Наугольник', latin: 'Norma', stars: 5, x: 75, y: 72, hemisphere: 'Южное' },
+    { name: 'Октант', latin: 'Octans', stars: 3, x: 55, y: 92, hemisphere: 'Южное' },
+    { name: 'Змееносец', latin: 'Ophiuchus', stars: 10, x: 68, y: 45, hemisphere: 'Экваториальное' },
+    { name: 'Орион', latin: 'Orion', stars: 10, x: 30, y: 45, hemisphere: 'Экваториальное' },
+    { name: 'Павлин', latin: 'Pavo', stars: 7, x: 88, y: 82, hemisphere: 'Южное' },
+    { name: 'Пегас', latin: 'Pegasus', stars: 9, x: 82, y: 32, hemisphere: 'Северное' },
+    { name: 'Персей', latin: 'Perseus', stars: 9, x: 22, y: 22, hemisphere: 'Северное' },
+    { name: 'Феникс', latin: 'Phoenix', stars: 8, x: 8, y: 72, hemisphere: 'Южное' },
+    { name: 'Живописец', latin: 'Pictor', stars: 3, x: 32, y: 75, hemisphere: 'Южное' },
+    { name: 'Рыбы', latin: 'Pisces', stars: 7, x: 5, y: 42, hemisphere: 'Северное' },
+    { name: 'Южная Рыба', latin: 'Piscis Austrinus', stars: 7, x: 85, y: 62, hemisphere: 'Южное' },
+    { name: 'Корма', latin: 'Puppis', stars: 9, x: 42, y: 68, hemisphere: 'Южное' },
+    { name: 'Компас', latin: 'Pyxis', stars: 3, x: 48, y: 62, hemisphere: 'Южное' },
+    { name: 'Сетка', latin: 'Reticulum', stars: 4, x: 25, y: 78, hemisphere: 'Южное' },
+    { name: 'Стрела', latin: 'Sagitta', stars: 4, x: 72, y: 35, hemisphere: 'Северное' },
+    { name: 'Стрелец', latin: 'Sagittarius', stars: 15, x: 78, y: 58, hemisphere: 'Южное' },
+    { name: 'Скорпион', latin: 'Scorpius', stars: 18, x: 70, y: 62, hemisphere: 'Южное' },
+    { name: 'Скульптор', latin: 'Sculptor', stars: 4, x: 12, y: 62, hemisphere: 'Южное' },
+    { name: 'Щит', latin: 'Scutum', stars: 2, x: 74, y: 52, hemisphere: 'Экваториальное' },
+    { name: 'Змея', latin: 'Serpens', stars: 11, x: 62, y: 42, hemisphere: 'Экваториальное' },
+    { name: 'Секстант', latin: 'Sextans', stars: 3, x: 52, y: 48, hemisphere: 'Экваториальное' },
+    { name: 'Телец', latin: 'Taurus', stars: 19, x: 25, y: 38, hemisphere: 'Северное' },
+    { name: 'Телескоп', latin: 'Telescopium', stars: 2, x: 80, y: 75, hemisphere: 'Южное' },
+    { name: 'Треугольник', latin: 'Triangulum', stars: 3, x: 12, y: 28, hemisphere: 'Северное' },
+    { name: 'Южный Треугольник', latin: 'Triangulum Australe', stars: 3, x: 78, y: 82, hemisphere: 'Южное' },
+    { name: 'Тукан', latin: 'Tucana', stars: 6, x: 5, y: 82, hemisphere: 'Южное' },
+    { name: 'Большая Медведица', latin: 'Ursa Major', stars: 20, x: 50, y: 12, hemisphere: 'Северное' },
+    { name: 'Малая Медведица', latin: 'Ursa Minor', stars: 7, x: 38, y: 5, hemisphere: 'Северное' },
+    { name: 'Паруса', latin: 'Vela', stars: 9, x: 55, y: 72, hemisphere: 'Южное' },
+    { name: 'Дева', latin: 'Virgo', stars: 15, x: 58, y: 45, hemisphere: 'Экваториальное' },
+    { name: 'Летучая Рыба', latin: 'Volans', stars: 4, x: 45, y: 82, hemisphere: 'Южное' },
+    { name: 'Лисичка', latin: 'Vulpecula', stars: 5, x: 72, y: 32, hemisphere: 'Северное' }
   ];
 
   const filteredObjects = celestialObjects.filter(obj =>
     obj.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredConstellations = constellations.filter(c =>
+    c.name.toLowerCase().includes(constellationSearch.toLowerCase()) ||
+    c.latin.toLowerCase().includes(constellationSearch.toLowerCase())
   );
 
   return (
@@ -229,47 +318,81 @@ const Index = () => {
       </section>
 
       <section id="sky-map" className="container mx-auto px-4 py-20">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Интерактивная карта неба</h2>
-          <p className="text-xl text-muted-foreground">Найдите созвездия на ночном небе</p>
+        <div className="text-center mb-8">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Все 88 созвездий</h2>
+          <p className="text-xl text-muted-foreground mb-6">Интерактивная карта звездного неба</p>
+          
+          <div className="max-w-md mx-auto relative mb-6">
+            <Icon name="Search" size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Поиск созвездий..."
+              value={constellationSearch}
+              onChange={(e) => setConstellationSearch(e.target.value)}
+              className="pl-10 bg-card/80 backdrop-blur border-border/50"
+            />
+          </div>
+
+          <div className="flex gap-3 justify-center flex-wrap mb-4">
+            <Badge variant="outline" className="border-primary/50">
+              <Icon name="Globe" size={14} className="mr-1" />
+              Всего: {filteredConstellations.length}
+            </Badge>
+            <Badge variant="outline" className="border-secondary/50">
+              <Icon name="Compass" size={14} className="mr-1" />
+              Северное: {filteredConstellations.filter(c => c.hemisphere === 'Северное').length}
+            </Badge>
+            <Badge variant="outline" className="border-accent/50">
+              <Icon name="CircleDot" size={14} className="mr-1" />
+              Южное: {filteredConstellations.filter(c => c.hemisphere === 'Южное').length}
+            </Badge>
+          </div>
         </div>
 
-        <Card className="max-w-4xl mx-auto border-border/50 bg-card/80 backdrop-blur overflow-hidden">
+        <Card className="border-border/50 bg-card/80 backdrop-blur overflow-hidden mb-8">
           <CardContent className="p-0">
             <div 
-              className="relative w-full h-96 bg-gradient-to-b from-background to-card"
+              className="relative w-full h-[800px] overflow-auto bg-gradient-to-b from-background via-card to-background"
               style={{
-                backgroundImage: 'radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent), radial-gradient(1px 1px at 80% 10%, white, transparent), radial-gradient(2px 2px at 90% 60%, white, transparent), radial-gradient(1px 1px at 33% 50%, white, transparent), radial-gradient(1px 1px at 66% 20%, white, transparent)',
-                backgroundSize: '200% 200%',
-                backgroundPosition: '0% 0%'
+                backgroundImage: 'radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent), radial-gradient(1px 1px at 80% 10%, white, transparent), radial-gradient(2px 2px at 90% 60%, white, transparent), radial-gradient(1px 1px at 33% 50%, white, transparent), radial-gradient(1px 1px at 66% 20%, white, transparent), radial-gradient(2px 2px at 15% 80%, white, transparent), radial-gradient(1px 1px at 85% 85%, white, transparent), radial-gradient(1px 1px at 40% 15%, white, transparent)',
+                backgroundSize: '400px 400px'
               }}
             >
-              {constellations.map((constellation, idx) => (
-                <div
-                  key={idx}
-                  className="absolute group cursor-pointer"
-                  style={{ left: `${constellation.x}%`, top: `${constellation.y}%` }}
-                >
-                  <div className="relative">
-                    <div className="w-3 h-3 bg-primary rounded-full animate-twinkle shadow-lg shadow-primary/50" 
-                         style={{ animationDelay: `${idx * 0.3}s` }} />
-                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-card border border-border/50 px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap backdrop-blur">
-                      <p className="text-sm font-semibold">{constellation.name}</p>
-                      <p className="text-xs text-muted-foreground">{constellation.stars} звезд</p>
+              <div className="relative min-h-[1200px] w-full">
+                {filteredConstellations.map((constellation, idx) => (
+                  <div
+                    key={idx}
+                    className="absolute group cursor-pointer z-10"
+                    style={{ 
+                      left: `${constellation.x}%`, 
+                      top: `${(constellation.y / 100) * 1200}px`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                  >
+                    <div className="relative">
+                      <div 
+                        className="w-2 h-2 bg-primary rounded-full animate-twinkle shadow-lg shadow-primary/50 hover:w-3 hover:h-3 transition-all" 
+                        style={{ animationDelay: `${idx * 0.05}s` }} 
+                      />
+                      <div className="absolute -top-16 left-1/2 -translate-x-1/2 bg-card/95 border border-border/50 px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap backdrop-blur z-20 shadow-xl">
+                        <p className="text-sm font-bold">{constellation.name}</p>
+                        <p className="text-xs text-muted-foreground italic">{constellation.latin}</p>
+                        <div className="flex gap-2 mt-1">
+                          <Badge variant="outline" className="text-xs">
+                            {constellation.stars} ⭐
+                          </Badge>
+                          <Badge variant="outline" className="text-xs">
+                            {constellation.hemisphere}
+                          </Badge>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
 
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="flex gap-2 flex-wrap">
-                  <Badge className="bg-primary/20 border-primary/50">
-                    <Icon name="Eye" size={12} className="mr-1" />
-                    Видимые сейчас
-                  </Badge>
-                  <Badge variant="outline" className="border-muted">
-                    <Icon name="EyeOff" size={12} className="mr-1" />
-                    Невидимые
+                <div className="absolute top-4 left-4 right-4 flex gap-2 flex-wrap pointer-events-none">
+                  <Badge className="bg-background/80 border-primary/50 backdrop-blur">
+                    <Icon name="Map" size={12} className="mr-1" />
+                    Прокрутите для просмотра всей карты
                   </Badge>
                 </div>
               </div>
@@ -277,18 +400,24 @@ const Index = () => {
           </CardContent>
         </Card>
 
-        <div className="mt-8 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-4">
           <Card className="p-6 border-border/50 bg-card/80 backdrop-blur">
             <Icon name="Clock" size={32} className="mb-4 text-primary" />
-            <h3 className="text-xl font-semibold mb-2">Лучшее время наблюдения</h3>
-            <p className="text-muted-foreground">Зимние месяцы: 18:00 - 23:00</p>
-            <p className="text-muted-foreground">Летние месяцы: 22:00 - 02:00</p>
+            <h3 className="text-xl font-semibold mb-2">Лучшее время</h3>
+            <p className="text-sm text-muted-foreground">Зима: 18:00 - 23:00</p>
+            <p className="text-sm text-muted-foreground">Лето: 22:00 - 02:00</p>
           </Card>
           <Card className="p-6 border-border/50 bg-card/80 backdrop-blur">
             <Icon name="MapPin" size={32} className="mb-4 text-secondary" />
-            <h3 className="text-xl font-semibold mb-2">Условия наблюдения</h3>
-            <p className="text-muted-foreground">Темное место вдали от города</p>
-            <p className="text-muted-foreground">Ясная безоблачная погода</p>
+            <h3 className="text-xl font-semibold mb-2">Условия</h3>
+            <p className="text-sm text-muted-foreground">Темное место</p>
+            <p className="text-sm text-muted-foreground">Ясная погода</p>
+          </Card>
+          <Card className="p-6 border-border/50 bg-card/80 backdrop-blur">
+            <Icon name="Star" size={32} className="mb-4 text-accent" />
+            <h3 className="text-xl font-semibold mb-2">Полушария</h3>
+            <p className="text-sm text-muted-foreground">Север: зимой</p>
+            <p className="text-sm text-muted-foreground">Юг: не видно</p>
           </Card>
         </div>
       </section>
